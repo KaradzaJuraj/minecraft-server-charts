@@ -6,213 +6,161 @@
             "type": "object",
             "properties": {
                 "eula": {
-                    "anyOf": [
-                        {
-                            "type": "string",
-                            "enum": ["true", "TRUE", "false", "FALSE"]
-                        },
-                        {
-                            "type": "boolean"
-                        }
-                    ]
+                    "type": "boolean",
+                    "description": "This must be overridden since we can't accept this for the user."
                 },
-                "version": {"type": "string",
-                    "default": "LATEST",
+                "version": {
+                    "type": "string",
+                    "enum": ["LATEST", "SNAPSHOT"],
                     "title": "Minecraft version for all server types",
-                    "description": "Such as LATEST, SNAPSHOT, or a specific version. Refer to https://docker-minecraft-server.readthedocs.io/en/latest/versions/minecraft/"
+                    "description": "Minecraft version such as LATEST, SNAPSHOT, or a specific version (e.g., '1.7.9')."
                 },
-                "type": {"type": "string",
-                    "default": "VANILLA",
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "VANILLA",
+                        "FORGE",
+                        "SPIGOT",
+                        "BUKKIT",
+                        "PAPER",
+                        "FTBA",
+                        "SPONGEVANILLA",
+                        "AUTO_CURSEFORGE"
+                    ],
                     "title": "Server type",
-                    "description": "Refer to https://docker-minecraft-server.readthedocs.io/en/latest/types-and-platforms/"
+                    "description": "Server type to run."
                 },
                 "difficulty": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["peaceful", "easy", "normal", "hard"],
+                    "description": "The difficulty level of the server."
                 },
                 "maxPlayers": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Maximum number of connected players."
                 },
                 "maxWorldSize": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The maximum possible size in blocks, expressed as a radius, that the world border can obtain."
                 },
-                "modrinth": {
-                    "type": "object",
-                    "required": ["projects"],
-                    "properties": {
-                        "projects": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            },
-                            "uniqueItems": true
-                        },
-                        "optionalDependencies": {
-                            "type": "boolean"
-                        },
-                        "allowedVersionType": {
-                            "enum": ["release", "beta", "alpha"]
-                        }
-                    }
+                "allowNether": {
+                    "type": "boolean",
+                    "description": "Allows players to travel to the Nether."
                 },
-                "spigetResources": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                "announcePlayerAchievements": {
+                    "type": "boolean",
+                    "description": "Allows server to announce when a player gets an achievement."
                 },
-                "modUrls": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "uniqueItems": true
+                "enableCommandBlock": {
+                    "type": "boolean",
+                    "description": "Enables command blocks."
                 },
-                "autoCurseForge": {
-                    "type": "object",
-                    "properties": {
-                        "apiKey": {
-                            "type": "object",
-                            "properties": {
-                                "key": {
-                                    "type": "string"
-                                },
-                                "existingSecret": {
-                                    "type": "string"
-                                },
-                                "secretKey": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "pageUrl": {
-                            "type": "string"
-                        },
-                        "slug": {
-                            "type": "string"
-                        },
-                        "fileId": {
-                            "type": "string"
-                        },
-                        "filenameMatcher": {
-                            "type": "string"
-                        },
-                        "excludeMods": {
-                            "type": "array",
-                            "items": {
-                                "type": ["integer", "string"]
-                            },
-                            "uniqueItems": true
-                        },
-                        "includeMods": {
-                            "type": "array",
-                            "items": {
-                                "type": ["integer", "string"]
-                            },
-                            "uniqueItems": true
-                        },
-                        "excludeIncludeFile": {
-                            "type": ["string", "null"]
-                        },
-                        "forceSynchronize": {
-                            "type": "boolean"
-                        },
-                        "setLevelFrom": {
-                            "enum": ["", "WORLD_FILE", "OVERRIDES"]
-                        },
-                        "parallelDownloads": {
-                            "type": "integer",
-                            "minimum": 1
-                        },
-                        "overridesSkipExisting": {
-                            "type": "boolean"
-                        }
-                    }
+                "forcegameMode": {
+                    "type": "boolean",
+                    "description": "If true, players will always join in the default gameMode even if they were previously set to something else."
                 },
-                "pluginUrls": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                "generateStructures": {
+                    "type": "boolean",
+                    "description": "Defines whether structures (such as villages) will be generated."
                 },
-                "maxBuildHeight": {
-                    "type": "integer"
+                "hardcore": {
+                    "type": "boolean",
+                    "description": "If true, players will be set to spectator mode if they die."
                 },
-                "maxTickTime": {
-                    "type": "integer"
+                "spawnAnimals": {
+                    "type": "boolean",
+                    "description": "Determines if animals will be able to spawn."
+                },
+                "spawnMonsters": {
+                    "type": "boolean",
+                    "description": "Determines if monsters will be spawned."
+                },
+                "spawnNPCs": {
+                    "type": "boolean",
+                    "description": "Determines if villagers will be spawned."
                 },
                 "spawnProtection": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Sets the area that non-ops cannot edit (0 to disable)."
                 },
-                "ftbLegacyJavaFixer": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "allowNether": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "announcePlayerAchievements": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "enableCommandBlock": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "forcegameMode": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "generateStructures": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "hardcore": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "spawnAnimals": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "spawnMonsters": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "spawnNPCs": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
+                "viewDistance": {
+                    "type": "integer",
+                    "description": "Max view distance (in chunks)."
+                },
+                "levelType": {
+                    "type": "string",
+                    "enum": ["DEFAULT", "FLAT", "LARGEBIOMES", "AMPLIFIED", "CUSTOMIZED"],
+                    "description": "Type of world generation."
+                },
                 "pvp": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
+                    "type": "boolean",
+                    "description": "If true, enable player-vs-player damage."
+                },
                 "onlineMode": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
-                "enforceSecureProfile": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]},
+                    "type": "boolean",
+                    "description": "Check accounts against Minecraft account service."
+                },
+                "motd": {
+                    "type": "string",
+                    "description": "Message of the Day."
+                },
+                "maxBuildHeight": {
+                    "type": "integer",
+                    "description": "The maximum height in which building is allowed."
+                },
+                "maxTickTime": {
+                    "type": "integer",
+                    "description": "The maximum number of milliseconds a single tick may take before the server watchdog stops the server with the message. -1 disables this entirely."
+                },
                 "overrideServerProperties": {
-                    "anyOf": [{"type": "string", "enum": ["default"]}, {"type": "boolean"}]}
+                    "type": "boolean",
+                    "description": "If set to true, the server configuration will be overridden each time the container starts up."
+                },
+                "memory": {
+                    "type": "string",
+                    "description": "Memory allocation for the server (e.g., '1024M')."
+                }
             },
-            "required": [
-                "eula"
-            ]
+            "required": ["eula"]
         },
         "mcbackup": {
             "type": "object",
             "properties": {
                 "backupMethod": {
                     "type": "string",
-                    "enum": [
-                        "tar",
-                        "restic",
-                        "rclone",
-                        "rsync"
-                    ]
+                    "enum": ["tar", "restic", "rclone", "rsync"],
+                    "description": "Backup methods. See https://github.com/itzg/docker-mc-backup for details."
                 },
                 "resticRepository": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The repository for Restic backups."
                 }
             }
         },
-        "extraPodSpec": {
-            "type": "object"
-        },
         "initContainers": {
+            "type": "array",
+            "description": "Array of init containers to include in the deployment.",
             "items": {
                 "type": ["object", "string"]
-            },
-            "type": "array"
+            }
         },
         "sidecarContainers": {
+            "type": "array",
+            "description": "Array of additional sidecars to include in the deployment.",
             "items": {
                 "type": ["object", "string"]
-            },
-            "type": "array"
+            }
         },
         "extraDeploy": {
+            "type": "array",
+            "description": "Array of additional objects to deploy with the release.",
             "items": {
                 "type": ["object", "string"]
-            },
-            "type": "array"
+            }
+        },
+        "extraPodSpec": {
+            "type": "object",
+            "description": "Extra fields to set on the pod."
         }
     }
 }
